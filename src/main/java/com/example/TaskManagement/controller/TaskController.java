@@ -4,6 +4,8 @@ import com.example.TaskManagement.model.Tasks;
 import com.example.TaskManagement.service.TaskService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -38,9 +40,17 @@ public class TaskController {
     }
 
     @PutMapping("/assign/{taskId}/user/{userId}")
-    public String assignUserToTask(@PathVariable int taskId, @PathVariable int userId) {
+    public ResponseEntity<String> assignUserToTask(@PathVariable int taskId, @PathVariable int userId) {
         boolean success = service.assignUserToTask(taskId, userId);
-        return success ? "User assigned to task successfully" : "Failed to assign user to task";
+
+        if (success) {
+            return ResponseEntity.ok("User assigned to task successfully");
+        } else {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body("Task or User not found. Failed to assign user to task.");
+        }
     }
+
 
 }
