@@ -24,5 +24,4 @@ public class Tasks {
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private Users user;
-
 }
