@@ -1,12 +1,14 @@
 package com.example.TaskManagement.controller;
 
+import com.example.TaskManagement.dto.TaskUserDTO;
 import com.example.TaskManagement.model.Tasks;
 import com.example.TaskManagement.service.TaskService;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/tasks")
@@ -51,4 +53,19 @@ public class TaskController {
                     .body("Task or User not found. Failed to assign user to task.");
         }
     }
+
+    @GetMapping("/task-user-view")
+    public List<TaskUserDTO> getTaskUserView() {
+        List<Tasks> allTasks = service.getAllTasks();
+
+        return allTasks.stream()
+                .map(task -> new TaskUserDTO(
+                        task.getTaskId(),
+                        task.getTaskDescription(),
+                        task.getUser().getUserId(),
+                        task.getUser().getUserName()
+                ))
+                .collect(Collectors.toList());
+    }
+
 }
