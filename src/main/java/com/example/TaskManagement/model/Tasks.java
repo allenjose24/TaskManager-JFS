@@ -8,6 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,8 +23,15 @@ public class Tasks {
     private int taskId;
     private String taskName;
     private String taskDescription;
+    private LocalDate startDate;
+    private LocalDate endDate;
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private Users user;
+
+    @PrePersist
+    protected void onCreate() {
+        this.startDate = LocalDate.now();
+    }
 }

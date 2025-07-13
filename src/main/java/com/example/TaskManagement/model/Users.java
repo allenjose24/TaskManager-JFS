@@ -21,6 +21,10 @@ public class Users {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
     private String userName;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     // @JsonIgnore
     // Use only while showing the user details from the database to hide the password
     // This will create IllegalArgumentException if used while registering because
@@ -29,4 +33,5 @@ public class Users {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonManagedReference
     private List<Tasks> tasks;
+
 }

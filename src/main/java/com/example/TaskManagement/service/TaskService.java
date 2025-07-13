@@ -35,7 +35,7 @@ public class TaskService {
 
     //Get
     public Tasks getTaskById(int id){
-        return repository.findById(id).orElse(null);
+        return repository.findById(id).orElse(new Tasks());
     }
 
     //delete
@@ -57,4 +57,10 @@ public class TaskService {
         }
         return false;
     }
+
+    public List<Tasks> getTasksByUserSortedByDeadline(int userId) {
+        return repository.findByUser_UserIdOrderByEndDateAsc(userId);
+    }
+
+
 }

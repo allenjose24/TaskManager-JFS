@@ -9,13 +9,9 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaskUserDTO {
+public class TaskDeadlineDTO {
     private int taskId;
     private String taskDescription;
-
     private LocalDate startDate;
     private LocalDate endDate;
-
-    private int userId;
-    private String userName;
 }
